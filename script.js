@@ -20,14 +20,13 @@ const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const final = document.getElementById("final");
 
-/* 💌 Открытие конверта */
+/* 💌 Открытие */
 envelope.addEventListener("click", () => {
   envelopeWrapper.style.display = "none";
   updateSlide();
 });
 
 function updateSlide() {
-
   if (isFinal) return;
 
   text.innerHTML = scenes[current];
@@ -43,6 +42,9 @@ function updateSlide() {
 card.addEventListener("click", (e) => {
 
   if (isFinal) return;
+
+  // Если нажали на кнопку — игнорируем перелистывание
+  if (e.target.closest("button")) return;
 
   const width = card.clientWidth;
   const clickX = e.offsetX;
@@ -61,7 +63,11 @@ card.addEventListener("click", (e) => {
 });
 
 /* 😈 Движение кнопки "Нет" */
-function moveNoButton() {
+function moveNoButton(e) {
+  if (e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
 
   escapePower += 0.4;
 
@@ -75,14 +81,14 @@ function moveNoButton() {
 /* ПК */
 noBtn.addEventListener("mouseenter", moveNoButton);
 
-/* Телефон */
-noBtn.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  moveNoButton();
-});
+/* 📱 Телефон */
+noBtn.addEventListener("touchstart", moveNoButton);
 
 /* 💥 Попытка поймать */
-noBtn.addEventListener("click", (e) => {
+noBtn.addEventListener("click", function(e) {
+
+  e.stopPropagation();
+  e.preventDefault();
 
   caughtAttempts++;
 
@@ -90,8 +96,6 @@ noBtn.addEventListener("click", (e) => {
     moveNoButton();
     return;
   }
-
-  e.stopPropagation();
 
   const rect = noBtn.getBoundingClientRect();
   noBtn.classList.add("explode");
@@ -111,7 +115,6 @@ noBtn.addEventListener("click", (e) => {
     heart.style.setProperty("--y", randomY + "px");
 
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 1000);
   }
 
@@ -125,7 +128,6 @@ yesBtn.addEventListener("click", (e) => {
   e.stopPropagation();
 
   isFinal = true;
-
   text.innerHTML = "";
   buttons.classList.add("hidden");
   final.classList.remove("hidden");
