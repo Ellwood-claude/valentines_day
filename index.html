@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💜</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Первый экран -->
+<div class="envelope-wrapper" id="envelopeWrapper">
+  <div class="envelope" id="envelope">
+    💖
+  </div>
+</div>
+
+<!-- Основная сцена -->
+<div class="scene">
+  <div class="card" id="card">
+
+    <div id="text" class="main-text"></div>
+
+    <!-- КНОПКИ -->
+    <div class="buttons hidden" id="buttons">
+      <button id="yesBtn" class="primary">Да</button>
+      <button id="noBtn" class="secondary">Нет</button>
+    </div>
+
+    <!-- Финал -->
+    <div class="final hidden" id="final">
+      <div class="restaurant">BeerLogovo</div>
+      <div class="details">
+        📍 Тамбов, ул. Октябрьская, 2 этаж<br>
+        📅 14.02.2026<br>
+        🕯 с 19:00 до 02:00
+      </div>
+
+      <iframe
+        class="map"
+        src="https://www.google.com/maps?q=BeerLogovo,+Тамбов,+Октябрьская&output=embed">
+      </iframe>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

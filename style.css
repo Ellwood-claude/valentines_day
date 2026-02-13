@@ -1,0 +1,234 @@
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    background: linear-gradient(180deg, #1c102e 0%, #0f0b1d 60%, #090714 100%);
+    color: white;
+    overflow: hidden;
+  }
+
+  /* 🌌 Фоновое свечение */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 25% 20%, rgba(255,0,128,0.3), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(140,0,255,0.3), transparent 50%);
+    z-index: -1;
+  }
+
+  /* 💌 Первый экран */
+
+  .envelope-wrapper {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity 0.6s ease;
+  }
+
+  .envelope {
+    width: 180px;
+    height: 180px;
+    border-radius: 45px;
+    background: linear-gradient(135deg, #ff4da6, #8c00ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      inset 0 0 20px rgba(255,255,255,0.2),
+      0 25px 60px rgba(255,0,128,0.5);
+    cursor: pointer;
+    transition: 0.4s ease;
+    font-size: 110px;
+     animation: pulseHeart 2s infinite ease-in-out;
+}
+
+@keyframes pulseHeart {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+  }
+
+  .envelope:hover {
+    transform: scale(1.08);
+  }
+
+  .heart {
+    font-size: 60px;
+  }
+
+  /* 🎬 Сцена */
+
+  .scene {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 💎 Карточка */
+
+  .card {
+    width: 92%;
+    max-width: 500px;
+    max-height: 90vh;
+    padding: 40px;
+    border-radius: 40px;
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.03)
+    );
+    backdrop-filter: blur(45px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+      0 30px 70px rgba(0,0,0,0.6),
+      inset 0 0 30px rgba(255,255,255,0.05);
+    text-align: center;
+    cursor: pointer;
+    overflow-y: auto;
+  }
+
+  /* ✨ Текстовые слайды */
+
+  .main-text {
+    font-size: 26px;
+    line-height: 1.7;
+    min-height: 140px;
+    font-weight: 600;
+
+    background: linear-gradient(90deg, #ff4da6, #ff66ff, #8c00ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation: glow 3s infinite ease-in-out;
+    transition: opacity 0.3s ease;
+  }
+
+  @keyframes glow {
+    0%   { filter: brightness(1); }
+    50%  { filter: brightness(1.4); }
+    100% { filter: brightness(1); }
+  }
+
+  /* 🔘 Кнопки */
+
+  .buttons {
+    margin-top: 30px;
+  }
+
+  button {
+    margin: 14px;
+    padding: 14px 40px;
+    border-radius: 35px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    position: relative;
+  }
+
+  .primary {
+    background: linear-gradient(135deg, #ff4da6, #8c00ff);
+    color: white;
+    box-shadow: 0 0 35px rgba(255,0,128,0.6);
+  }
+
+  .primary:hover {
+    transform: scale(1.05);
+  }
+
+  .secondary {
+    background: rgba(255,255,255,0.08);
+    color: white;
+  }
+
+  /* 💖 Финальный экран */
+
+  .final {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.7s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .restaurant {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+
+    background: linear-gradient(90deg, #ff4da6, #8c00ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .details {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    opacity: 0.9;
+  }
+
+  .map {
+    width: 100%;
+    height: 280px; /* уменьшено чтобы влезало */
+    border-radius: 30px;
+    border: none;
+    box-shadow:
+      0 0 40px rgba(140,0,255,0.5),
+      0 0 80px rgba(255,0,128,0.3);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  /* 💥 Взрыв кнопки */
+
+.explode {
+  animation: explodeBtn 0.4s ease forwards;
+}
+
+@keyframes explodeBtn {
+  0%   { transform: scale(1); opacity: 1; }
+  40%  { transform: scale(1.3); }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* 💗 Летающие сердечки */
+
+.heart-particle {
+  position: fixed;
+  font-size: 20px;
+  pointer-events: none;
+  animation: flyHeart 1s ease-out forwards;
+  z-index: 999;
+}
+
+@keyframes flyHeart {
+  0% {
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(1.5);
+    opacity: 0;
+  }
+}
