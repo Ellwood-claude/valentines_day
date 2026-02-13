@@ -38,13 +38,13 @@ function updateSlide() {
   }
 }
 
-/* 📖 Переключение ТОЛЬКО ВПЕРЁД */
-card.addEventListener("click", (e) => {
+/* 📖 ТОЛЬКО ВПЕРЁД */
+card.addEventListener("click", function(e) {
 
   if (isFinal) return;
 
-  // если клик по кнопке — игнорируем
-  if (e.target.closest("button")) return;
+  // если нажали на кнопку — не листаем
+  if (e.target.tagName === "BUTTON") return;
 
   if (current < scenes.length - 1) {
     current++;
@@ -52,19 +52,20 @@ card.addEventListener("click", (e) => {
   }
 });
 
-/* 😈 Движение кнопки "Нет" */
+/* 😈 ДВИЖЕНИЕ КНОПКИ (медленнее и мягче) */
 function moveNoButton(e) {
+
   if (e) {
     e.stopPropagation();
     e.preventDefault();
   }
 
-  escapePower += 0.5;
+  escapePower += 0.15; // замедлили ускорение
 
-  const randomX = (Math.random() - 0.5) * 700 * escapePower;
-  const randomY = (Math.random() - 0.5) * 450 * escapePower;
+  const randomX = (Math.random() - 0.5) * 250 * escapePower;
+  const randomY = (Math.random() - 0.5) * 150 * escapePower;
 
-  noBtn.style.transition = "0.15s ease";
+  noBtn.style.transition = "0.25s ease";
   noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
 }
 
@@ -74,7 +75,7 @@ noBtn.addEventListener("mouseenter", moveNoButton);
 /* Телефон */
 noBtn.addEventListener("touchstart", moveNoButton);
 
-/* 💥 Попытка поймать */
+/* 💥 Взрыв если поймали 4 раза */
 noBtn.addEventListener("click", function(e) {
 
   e.stopPropagation();
@@ -82,7 +83,7 @@ noBtn.addEventListener("click", function(e) {
 
   caughtAttempts++;
 
-  if (caughtAttempts < 3) {
+  if (caughtAttempts < 4) {
     moveNoButton();
     return;
   }
@@ -90,14 +91,14 @@ noBtn.addEventListener("click", function(e) {
   const rect = noBtn.getBoundingClientRect();
   noBtn.classList.add("explode");
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 20; i++) {
 
     const heart = document.createElement("div");
     heart.className = "heart-particle";
     heart.innerHTML = "💖";
 
-    const randomX = (Math.random() - 0.5) * 400;
-    const randomY = (Math.random() - 0.5) * 400;
+    const randomX = (Math.random() - 0.5) * 300;
+    const randomY = (Math.random() - 0.5) * 300;
 
     heart.style.left = rect.left + rect.width / 2 + "px";
     heart.style.top = rect.top + rect.height / 2 + "px";
@@ -105,16 +106,17 @@ noBtn.addEventListener("click", function(e) {
     heart.style.setProperty("--y", randomY + "px");
 
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1000);
+    setTimeout(() => heart.remove(), 900);
   }
 
   setTimeout(() => {
     noBtn.style.display = "none";
-  }, 400);
+  }, 300);
 });
 
 /* 💖 Финал */
-yesBtn.addEventListener("click", (e) => {
+yesBtn.addEventListener("click", function(e) {
+
   e.stopPropagation();
 
   isFinal = true;
