@@ -38,27 +38,17 @@ function updateSlide() {
   }
 }
 
-/* 📖 Перелистывание карточек */
+/* 📖 Переключение ТОЛЬКО ВПЕРЁД */
 card.addEventListener("click", (e) => {
 
   if (isFinal) return;
 
-  // Если нажали на кнопку — игнорируем перелистывание
+  // если клик по кнопке — игнорируем
   if (e.target.closest("button")) return;
 
-  const width = card.clientWidth;
-  const clickX = e.offsetX;
-
-  if (clickX > width / 2) {
-    if (current < scenes.length - 1) {
-      current++;
-      updateSlide();
-    }
-  } else {
-    if (current > 0) {
-      current--;
-      updateSlide();
-    }
+  if (current < scenes.length - 1) {
+    current++;
+    updateSlide();
   }
 });
 
@@ -69,10 +59,10 @@ function moveNoButton(e) {
     e.preventDefault();
   }
 
-  escapePower += 0.4;
+  escapePower += 0.5;
 
-  const randomX = (Math.random() - 0.5) * 600 * escapePower;
-  const randomY = (Math.random() - 0.5) * 400 * escapePower;
+  const randomX = (Math.random() - 0.5) * 700 * escapePower;
+  const randomY = (Math.random() - 0.5) * 450 * escapePower;
 
   noBtn.style.transition = "0.15s ease";
   noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
@@ -81,7 +71,7 @@ function moveNoButton(e) {
 /* ПК */
 noBtn.addEventListener("mouseenter", moveNoButton);
 
-/* 📱 Телефон */
+/* Телефон */
 noBtn.addEventListener("touchstart", moveNoButton);
 
 /* 💥 Попытка поймать */
