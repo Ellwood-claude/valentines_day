@@ -8,6 +8,8 @@ const scenes = [
 
 let current = 0;
 let isFinal = false;
+let escapePower = 1;
+let caughtAttempts = 0;
 
 const envelope = document.getElementById("envelope");
 const envelopeWrapper = document.getElementById("envelopeWrapper");
@@ -18,7 +20,7 @@ const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const final = document.getElementById("final");
 
-/* Открытие */
+/* 💌 Открытие конверта */
 envelope.addEventListener("click", () => {
   envelopeWrapper.style.display = "none";
   updateSlide();
@@ -26,7 +28,7 @@ envelope.addEventListener("click", () => {
 
 function updateSlide() {
 
-  if (isFinal) return; // 🚫 Блокируем если финал
+  if (isFinal) return;
 
   text.innerHTML = scenes[current];
 
@@ -37,10 +39,10 @@ function updateSlide() {
   }
 }
 
-/* Перелистывание */
+/* 📖 Перелистывание карточек */
 card.addEventListener("click", (e) => {
 
-  if (isFinal) return; // 🚫 Полностью отключаем после финала
+  if (isFinal) return;
 
   const width = card.clientWidth;
   const clickX = e.offsetX;
@@ -58,18 +60,73 @@ card.addEventListener("click", (e) => {
   }
 });
 
-/* Убегающая кнопка */
-noBtn.addEventListener("mouseenter", () => {
-  noBtn.style.transform =
-    `translate(${Math.random()*200-50}px, ${Math.random()*80-30}px)`;
+/* 😈 Движение кнопки "Нет" */
+function moveNoButton() {
+
+  escapePower += 0.4;
+
+  const randomX = (Math.random() - 0.5) * 600 * escapePower;
+  const randomY = (Math.random() - 0.5) * 400 * escapePower;
+
+  noBtn.style.transition = "0.15s ease";
+  noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+}
+
+/* ПК */
+noBtn.addEventListener("mouseenter", moveNoButton);
+
+/* Телефон */
+noBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  moveNoButton();
 });
 
-/* Финал */
+/* 💥 Попытка поймать */
+noBtn.addEventListener("click", (e) => {
+
+  caughtAttempts++;
+
+  if (caughtAttempts < 3) {
+    moveNoButton();
+    return;
+  }
+
+  e.stopPropagation();
+
+  const rect = noBtn.getBoundingClientRect();
+  noBtn.classList.add("explode");
+
+  for (let i = 0; i < 25; i++) {
+
+    const heart = document.createElement("div");
+    heart.className = "heart-particle";
+    heart.innerHTML = "💖";
+
+    const randomX = (Math.random() - 0.5) * 400;
+    const randomY = (Math.random() - 0.5) * 400;
+
+    heart.style.left = rect.left + rect.width / 2 + "px";
+    heart.style.top = rect.top + rect.height / 2 + "px";
+    heart.style.setProperty("--x", randomX + "px");
+    heart.style.setProperty("--y", randomY + "px");
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 1000);
+  }
+
+  setTimeout(() => {
+    noBtn.style.display = "none";
+  }, 400);
+});
+
+/* 💖 Финал */
 yesBtn.addEventListener("click", (e) => {
   e.stopPropagation();
 
-  isFinal = true;            // ✅ Включаем режим финала
-  text.innerHTML = "";       // ✅ Удаляем текст
+  isFinal = true;
+
+  text.innerHTML = "";
   buttons.classList.add("hidden");
   final.classList.remove("hidden");
 });
