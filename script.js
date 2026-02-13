@@ -60,12 +60,13 @@ function moveNoButton(e) {
     e.preventDefault();
   }
 
-  escapePower += 0.15; // замедлили ускорение
+  escapePower += 0.1; // медленнее ускоряется
 
-  const randomX = (Math.random() - 0.5) * 250 * escapePower;
-  const randomY = (Math.random() - 0.5) * 150 * escapePower;
+  // маленькое смещение
+  const randomX = (Math.random() - 0.5) * 120 * escapePower;
+  const randomY = (Math.random() - 0.5) * 80 * escapePower;
 
-  noBtn.style.transition = "0.25s ease";
+  noBtn.style.transition = "0.3s ease";
   noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
 }
 
